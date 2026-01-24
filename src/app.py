@@ -4,9 +4,10 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def main():
-    return '''
+    return """
     <!DOCTYPE html>
     <html>
     <head>
@@ -26,12 +27,14 @@ def main():
         </form>
     </body>
     </html>
-    '''
+    """
+
 
 @app.route("/echo_user_input", methods=["POST"])
 def echo_input():
     input_text = request.form.get("user_input", "")
-    return '''
+    return (
+        '''
     <!DOCTYPE html>
     <html>
     <head>
@@ -47,11 +50,16 @@ def echo_input():
     <body>
         <h1>Echo Your Input</h1>
         <form action="/echo_user_input" method="POST">
-            <input name="user_input" value="''' + input_text + '''" placeholder="Type something...">
+            <input name="user_input" value="'''
+        + input_text
+        + """" placeholder="Type something...">
             <input type="submit" value="Submit!">
         </form>
-        <div class="result">You entered: ''' + input_text + '''</div>
+        <div class="result">You entered: """
+        + input_text
+        + """</div>
         <p><a href="/">← Start over</a></p>
     </body>
     </html>
-    '''
+    """
+    )
