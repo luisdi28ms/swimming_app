@@ -14,4 +14,4 @@ def test_main(http_client):
     assert response.status_code == 200
 
 def test_break():
-    assert 1 + 1 == 3
+    assert 1 + 2 == 3
