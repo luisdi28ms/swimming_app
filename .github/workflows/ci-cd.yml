@@ -1,0 +1,57 @@
+name: Continuous Integration - Continuous Deployment
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  # --- 1. TEST JOB (CI) ---
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.14
+
+      - name: Install Dependencies
+        run: uv sync --dev
+
+      - name: Run Tests
+        run: uv run pytest
+
+  # --- 2. DEPLOY JOB (CD) ---
+  deploy:
+    name: Deploy to Heroku
+    needs: test                     # Only deploy if 'test' job succeeds
+    if: github.event_name == 'push' # Don't deploy on Pull Requests, only merges/pushes to main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to Heroku Container Registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web .
+          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
+
+      - name: Release to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          sudo curl https://cli-assets.heroku.com/install.sh | sh
+          heroku container:release web --app ${{ secrets.HEROKU_APP_NAME }}
