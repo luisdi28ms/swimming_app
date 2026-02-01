@@ -31,4 +31,4 @@ ENV PATH="/home/deployer/.venv/bin:$PATH"
 ENV PYTHONUNBUFFERED=1
 
 # Heroku dynamic port binding
-CMD uv run gunicorn --bind 0.0.0.0:$PORT src.app:app
+CMD uv run gunicorn --bind 0.0.0.0:$PORT src.main:app

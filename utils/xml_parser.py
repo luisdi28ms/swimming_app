@@ -4,12 +4,12 @@ from datetime import datetime
 import os
 
 # Path to your export.xml file (update this)
-XML_PATH = '/Users/luisdi/Downloads/apple_health_export/export.xml'  # e.g., '/path/to/apple_health_export/export.xml'
+XML_PATH = 'data/export.xml'  # e.g., '/path/to/apple_health_export/export.xml'
 
 # Output CSV files
-WORKOUTS_CSV = 'swimming_workouts.csv'
-DISTANCE_CSV = 'swimming_distance.csv'
-STROKES_CSV = 'swimming_strokes.csv'
+WORKOUTS_CSV = 'data/swimming_workouts.csv'
+DISTANCE_CSV = 'data/swimming_distance.csv'
+STROKES_CSV = 'data/swimming_strokes.csv'
 
 def parse_workouts(xml_path):
     """Parse <Workout> elements for swimming workouts."""
