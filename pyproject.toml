@@ -26,7 +26,7 @@ dependencies = [
 package = true # This is the magic line for uv
 
 [project.scripts]
-start-app = "src.app:main" # This replaces your main.py
+start-app = "src.main:main" # This replaces your main.py
 
 [dependency-groups]
 dev = [
