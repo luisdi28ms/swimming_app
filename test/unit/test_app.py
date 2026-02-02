@@ -1,6 +1,6 @@
 import pytest
 import unittest.mock
-from app import app
+from main import app
 
 @pytest.fixture
 def http_client():
