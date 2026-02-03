@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block title %}Results{% endblock %}
+
+{% block content %}
+<h1>Results</h1>
+<div>{{ head|safe }}</div>
+<div class="result">Tail: {{ tail|safe }}</div>
+<p><a href="/">← start over</a></p>
+{% endblock %}

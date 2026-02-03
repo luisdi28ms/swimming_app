@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Upload Data{% endblock %}
+
+{% block content %}
+<h1>Upload your data</h1>
+<h3>Supported formats: .csv, .xlsx, .xls</h3>
+<form action="/collect_user_data" method="POST" enctype="multipart/form-data">
+	<input type="file" name="user_input" accept=".csv, .xlsx, .xls">
+	<br>
+	<input type="submit" value="Upload!">
+</form>
+{% endblock %}

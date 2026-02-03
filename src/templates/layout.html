@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>{% block title %}Data App{% endblock %}</title>
+	<style>
+		body {
+			font-family: sans-serif;
+			margin: 40px;
+			text-align: center;
+		}
+
+		.table {
+			margin: 20px auto;
+			border-collapse: collapse;
+		}
+
+		.table-striped tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+
+<body>
+	{% block content %}{% endblock %}
+</body>
+
+</html>
