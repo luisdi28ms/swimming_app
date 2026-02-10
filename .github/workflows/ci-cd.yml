@@ -2,11 +2,9 @@ name: Continuous Integration - Continuous Deployment
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   # --- 1. TEST JOB (CI) ---
@@ -32,8 +30,8 @@ jobs:
   # --- 2. DEPLOY JOB (CD) ---
   deploy:
     name: Deploy to Heroku
-    needs: test                     # Only deploy if 'test' job succeeds
-    if: github.event_name == 'push' # Don't deploy on Pull Requests, only merges/pushes to main
+    needs: test
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -49,9 +47,14 @@ jobs:
           docker build -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web .
           docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
 
-      - name: Release to Heroku
+      - name: Release and Migrate
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
+          # Install Heroku CLI
           sudo curl https://cli-assets.heroku.com/install.sh | sh
+          
+          # Release the container
           heroku container:release web --app ${{ secrets.HEROKU_APP_NAME }}
+          
+          heroku run flask db upgrade --app ${{ secrets.HEROKU_APP_NAME }}         
