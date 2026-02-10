@@ -17,7 +17,7 @@ class DataCollector:
             # Delegate data work to the Model
             data = self._process_upload(file)
             # Delegate display work to the View
-            return render_template("results.html", head=data['head'], tail=data['tail'])
+            return render_template("results.html", head=data['head'], tail=data['tail'], row_count=data['row_count'])
         except Exception as e:
             return f"<h1>Error processing file:</h1> <p>{str(e)}</p>", 500
 
@@ -34,11 +34,16 @@ class DataCollector:
             df = df[['startDate', 'endDate', 'totalDistance',
                    'duration_min'
                      ]]
+            df.index.name = 'id'
+            df.reset_index(inplace=True)
             df.to_sql('swimming_workout', con=db.engine, if_exists='append', index=False)
+
+        db_total = SwimmingWorkout.query.count()
 
         return {
             "head": df.head().to_html(classes='table table-striped'),
-            "tail": df.tail().to_html(classes='table table-striped')
+            "tail": df.tail().to_html(classes='table table-striped'),
+            "row_count": db_total
         }
 
 class SwimmingWorkout(db.Model):
