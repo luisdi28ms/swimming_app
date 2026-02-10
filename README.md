@@ -5,3 +5,18 @@ Run the app:
 ```
 uv run flask --app src/main.py run
 ```
+
+Run docker:
+```
+docker-compose up --build
+```
+
+Query db:
+```
+sqlite3 ./instance/swimmers.db "SELECT count(*) FROM swimming_workout LIMIT 5;"
+```
+
+Clear out table:
+```
+sqlite3 ./instance/swimmers.db "drop table swimming_workout;"
+```
