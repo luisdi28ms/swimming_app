@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 from flask import Flask, render_template
-from models.data_collector import DataCollector, db
+from controllers.data_collector import DataCollector
+from repositories.sql_alchemy import db
 import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///swimmers.db')
+
 db.init_app(app)
 with app.app_context():
     db.create_all()
