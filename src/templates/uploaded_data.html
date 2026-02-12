@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Uploaded Data{% endblock %}
+
+{% block content %}
+<h1>Uploaded Data</h1>
+<div>Table head: {{ head|safe }}</div>
+<div class="result">Table tail: {{ tail|safe }}</div>
+<div class="alert alert-info mt-3">
+    <strong>Total Records Stored:</strong> {{ row_count }}
+</div>
+<p><a href="/">← start over</a></p>
+{% endblock %}

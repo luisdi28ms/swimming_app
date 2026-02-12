@@ -1,8 +1,8 @@
 import pandas as pd
 from flask import render_template, request
-from flask_sqlalchemy import SQLAlchemy
+from models.raw_swimming_distance import RawSwimmingDistance
+from repositories.sql_alchemy import db
 
-db = SQLAlchemy()
 
 class DataCollector:
 
@@ -24,21 +24,17 @@ class DataCollector:
 
     def _process_upload(self, file):
         """Handles different file types and returns head/tail HTML."""
-        if file.filename.endswith('.csv'):
-            df = pd.read_csv(file)
-        else:
-            # Requires 'openpyxl' installed for .xlsx
-            df = pd.read_excel(file)
-        if file.filename.endswith('swimming_workouts.csv'):
-            df = df.drop_duplicates("startDate")
-            df = df[['startDate', 'endDate', 'totalDistance',
-                   'duration_min'
-                     ]]
+        df = pd.read_csv(file)
+        if file.filename.endswith('swimming_distance.csv'):
+            condition = df["value"] > 0
+            df = df[condition].copy()
+            columns = ["sourceName", "value", "unit", "startDate", "endDate"]
+            df = df.loc[:,columns].copy()
             df.index.name = 'id'
             df.reset_index(inplace=True)
-            df.to_sql('swimming_workout', con=db.engine, if_exists='append', index=False)
+            df.to_sql('raw_swimming_distance', con=db.engine, if_exists='append', index=False)
 
-        db_total = SwimmingWorkout.query.count()
+        db_total = RawSwimmingDistance.query.count()
 
         return {
             "head": df.head().to_html(classes='table table-striped'),
@@ -46,9 +42,4 @@ class DataCollector:
             "row_count": db_total
         }
 
-class SwimmingWorkout(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    startDate = db.Column(db.String(50))
-    endDate = db.Column(db.String(50))
-    totalDistance = db.Column(db.Float)
-    duration_min = db.Column(db.Float)
+
