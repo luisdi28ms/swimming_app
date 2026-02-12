@@ -2,9 +2,9 @@ services:
   web:
     build: .
     ports:
-      - "5001:5000"
+      - "8000:8000"
     volumes:
       - ./instance:/home/deployer/data
     environment:
-      - PORT=5000
+      - PORT=8000
       - DATABASE_URL=sqlite:////home/deployer/data/swimmers.db

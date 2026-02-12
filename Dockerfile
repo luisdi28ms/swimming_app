@@ -31,4 +31,4 @@ ENV PYTHONUNBUFFERED=1
 ENV DATABASE_URL=sqlite:////home/deployer/data/swimmers.db
 
 # Heroku/Standard dynamic port binding
-CMD uv run gunicorn --bind 0.0.0.0:${PORT:-5000} src.main:app
+CMD uv run gunicorn --bind 0.0.0.0:${PORT:-8000} src.main:app
