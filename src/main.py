@@ -14,6 +14,7 @@ with app.app_context():
     db.create_all()
 
 data_collector = DataCollector()
+analyzer = DataAnalyzer()
 
 @app.route("/")
 def main():
@@ -25,7 +26,6 @@ def collect_data():
 
 @app.route('/analyze_user_data')
 def swimming_report():
-    analyzer = DataAnalyzer()
     return analyzer.render_swimming_report()
 
 if __name__ == "__main__":
