@@ -4,31 +4,14 @@
 <h1>Swimming Distance Analysis</h1>
 
 <h2>Summary</h2>
+<p>Average Distance per Session: <strong>{{ "%.2f"|format(avg_distance) }} meters</strong></p>
+<p>Average Session: <strong>{{ avg_session }} minutes</strong></p>
+<p>Longest Distance: <strong>{{ longest_distance }} meters</strong></p>
+<p>Longest Session: <strong>{{ longest_session }} minutes</strong></p>
 <p>Total Distance: <strong>{{ total_distance }} meters</strong> ({{ "%.2f"|format(total_distance / 1000) }} km)</p>
 <p>Total Sessions: <strong>{{ total_sessions }}</strong></p>
-<p>Average per Session: <strong>{{ "%.2f"|format(avg_distance) }} meters</strong></p>
 
 <h2>All Records</h2>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>Source</th>
-			<th>Distance (m)</th>
-			<th>Unit</th>
-			<th>Start Date</th>
-			<th>End Date</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for record in records %}
-		<tr>
-			<td>{{ record.sourceName }}</td>
-			<td>{{ record.value }}</td>
-			<td>{{ record.unit }}</td>
-			<td>{{ record.startDate }}</td>
-			<td>{{ record.endDate }}</td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+<div class="result"> {{ record_list|safe }}</div>
+
 {% endblock %}
