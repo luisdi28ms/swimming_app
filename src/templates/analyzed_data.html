@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}Swimming Distance Data{% endblock %}
+{% block content %}
+<h1>Swimming Distance Analysis</h1>
+
+<h2>Summary</h2>
+<p>Average Distance per Session: <strong>{{ "%.2f"|format(avg_distance) }} meters</strong></p>
+<p>Average Session: <strong>{{ avg_session }} minutes</strong></p>
+<p>Longest Distance: <strong>{{ longest_distance }} meters</strong></p>
+<p>Longest Session: <strong>{{ longest_session }} minutes</strong></p>
+<p>Total Distance: <strong>{{ total_distance }} meters</strong> ({{ "%.2f"|format(total_distance / 1000) }} km)</p>
+<p>Total Sessions: <strong>{{ total_sessions }}</strong></p>
+
+<h2>All Records</h2>
+<div class="result"> {{ record_list|safe }}</div>
+
+{% endblock %}
