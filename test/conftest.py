@@ -1,6 +1,6 @@
 import pytest
 import os
-from src.main import app, db
+from main import app, db
 
 @pytest.fixture
 def client():
