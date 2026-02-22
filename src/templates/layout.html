@@ -33,10 +33,6 @@
 			color: #f2f2f2;
 			text-decoration: underline;
 		}
-		nav a.active {
-			border-bottom: 2px solid white;
-			padding-bottom: 3px;
-		}
 		nav svg {
 			width: 18px;
 			height: 18px;
@@ -47,23 +43,17 @@
 </head>
 <body>
 	<nav>
-		<a href="/" class="{% if request.path == '/' %}active{% endif %}">
+		<a href="/">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5">
 				<path d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/>
 			</svg>
 			Input Data
 		</a>
-		<a href="/analyze_user_data" class="{% if request.path == '/analyze_user_data' %}active{% endif %}">
+		<a href="/analyze_user_data">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5">
 				<path d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"/>
 			</svg>
 			Dashboard
-		</a>
-		<a href="/notifications" class="{% if request.path == '/notifications' %}active{% endif %}">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5">
-				<path d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2zm6-6V11a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1l-2-2z"/>
-			</svg>
-			Notifications
 		</a>
 	</nav>
 	{% block content %}{% endblock %}
