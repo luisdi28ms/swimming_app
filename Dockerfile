@@ -23,6 +23,9 @@ RUN uv sync --frozen --no-cache --no-dev
 # 4. Copy Source Code
 COPY --chown=deployer src/ src/
 
+RUN mkdir -p /home/deployer/data && \
+    mkdir -p /home/deployer/uploads && \
+    chown -R deployer:deployer /home/deployer/data /home/deployer/uploads
 # 5. Runtime Configuration
 # Point the PATH to the uv-created virtualenv
 ENV PATH="/home/deployer/.venv/bin:$PATH"

@@ -1,10 +1,41 @@
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   web:
     build: .
     ports:
       - "8000:8000"
     volumes:
       - ./instance:/home/deployer/data
+      - ./uploads:/home/deployer/uploads
     environment:
       - PORT=8000
       - DATABASE_URL=sqlite:////home/deployer/data/swimmers.db
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+      - UPLOAD_FOLDER=/home/deployer/uploads
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  worker:
+    build: .
+    command: uv run python src/consumers/swim_data_worker.py
+    volumes:
+      - ./instance:/home/deployer/data
+      - ./uploads:/home/deployer/uploads
+    environment:
+      - DATABASE_URL=sqlite:////home/deployer/data/swimmers.db
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+      - UPLOAD_FOLDER=/home/deployer/uploads
+    depends_on:
+      rabbitmq:
+        condition: service_healthy

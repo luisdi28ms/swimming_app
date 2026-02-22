@@ -3,10 +3,8 @@
 
 {% block content %}
 <h1>Uploaded Data</h1>
-<div>Table head: {{ head|safe }}</div>
-<div class="result">Table tail: {{ tail|safe }}</div>
-<div class="alert alert-info mt-3">
-    <strong>Total Records Stored:</strong> {{ row_count }}
+    <strong>File received, processing in background!</strong> {{ row_count }}
 </div>
 <p><a href="/">← start over</a></p>
+<p><a href="/analyze_user_data">Go to dashboard</a></p>
 {% endblock %}
