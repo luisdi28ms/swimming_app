@@ -35,4 +35,9 @@ start-app = "src.main:main" # This replaces your main.py
 dev = [
     "black>=26.1.0",
     "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
 ]
+
+[tool.pytest.ini_options]
+addopts = "--cov=src --cov-report=html"
+testpaths = ["test"]
