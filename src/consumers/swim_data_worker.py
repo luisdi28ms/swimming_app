@@ -69,7 +69,7 @@ def handle_message(ch, method, properties, body):
         print(f"Error: {e}")
         ch.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
 
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: no cover
     url = os.getenv('RABBITMQ_URL', 'amqp://guest:guest@localhost:5672/')
     connection = pika.BlockingConnection(pika.URLParameters(url))
     channel = connection.channel()
