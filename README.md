@@ -14,13 +14,13 @@ Once the app is running you can upload the file "uploads/swimming_distance.csv".
 ### Step 1:
 
 Open the browser and go to: http://127.0.0.1:8000/ (localhost:8000)
-![upload file]("./images/upload_file.png")
+![upload file](./images/upload_file.png)
 
 ### Step 2:
 
 Click on the dashboard tab to visualize the data you just uploaded.
 
-![dashboard]("./images/dashboard.png")
+![dashboard](./images/dashboard.png)
 
 ## Monitoring
 
